@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Medicine Reminder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07111f;
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 7%;
+
+            background: rgba(7, 17, 31, 0.96);
+            border-bottom: 1px solid #26384f;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #55d6ff;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #55d6ff;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            min-height: 90vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+            padding: 60px 20px;
+
+            background:
+                radial-gradient(circle at top, #19385b, #07111f 65%);
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .medicine-icon {
+            font-size: 75px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 70px);
+            margin-bottom: 20px;
+
+            background: linear-gradient(
+                90deg,
+                #55d6ff,
+                #9b8cff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: #c6d1df;
+            font-size: 18px;
+            max-width: 720px;
+            margin: auto;
+        }
+
+        .buttons {
+            margin-top: 30px;
+
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 13px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #55d6ff;
+            color: #06101c;
+        }
+
+        .secondary {
+            border: 1px solid #55d6ff;
+            color: #55d6ff;
+        }
+
+
+        /* GENERAL SECTIONS */
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 45px;
+
+            color: #9eabbc;
+        }
+
+
+        /* CARDS */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 22px;
+        }
+
+        .card {
+            background: #101d30;
+
+            border: 1px solid #26384f;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #55d6ff;
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            color: #55d6ff;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #b8c4d3;
+            font-size: 14px;
+        }
+
+
+        /* PROJECT FLOW */
+
+        .flow {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: #101d30;
+
+            border: 1px solid #26384f;
+
+            padding: 20px 25px;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 25px;
+            color: #55d6ff;
+        }
+
+
+        /* REMINDER */
+
+        .reminder {
+            max-width: 650px;
+            margin: auto;
+
+            text-align: center;
+
+            background: #101d30;
+
+            border: 1px solid #26384f;
+
+            border-radius: 18px;
+
+            padding: 40px;
+        }
+
+        .reminder-time {
+            font-size: 60px;
+
+            font-weight: bold;
+
+            color: #55d6ff;
+
+            margin: 15px 0;
+        }
+
+        .reminder-label {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border-radius: 20px;
+
+            background: #173b35;
+
+            color: #6ee7b7;
+
+            font-size: 14px;
+        }
+
+
+        /* TECHNOLOGIES */
+
+        .technologies {
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+        .technology {
+            background: #101d30;
+
+            border: 1px solid #26384f;
+
+            padding: 12px 18px;
+
+            border-radius: 8px;
+
+            color: #d3dce8;
+        }
+
+
+        /* CODE */
+
+        .code-container {
+            max-width: 950px;
+
+            margin: auto;
+
+            background: #050a12;
+
+            border: 1px solid #26384f;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            overflow-x: auto;
+        }
+
+        pre {
+            color: #dce7f5;
+
+            font-family: Consolas, monospace;
+
+            font-size: 14px;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 35px 20px;
+
+            background: #050a12;
+
+            border-top: 1px solid #26384f;
+
+            color: #8997aa;
+        }
+
+        footer strong {
+            color: #55d6ff;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+            .reminder-time {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <div class="logo">
+            💊 Smart Medicine Reminder
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#components">Components</a>
+            </li>
+
+            <li>
+                <a href="#working">Working</a>
+            </li>
+
+            <li>
+                <a href="#technology">Technology</a>
+            </li>
+
+            <li>
+                <a href="#code">Code</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="medicine-icon">
+                💊⏰
+            </div>
+
+            <h1>
+                Smart Medicine Reminder
+            </h1>
+
+            <p>
+                An Arduino-based Embedded Systems project that uses a
+                DS3231 Real-Time Clock module and a buzzer to provide
+                scheduled medicine reminders.
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    href="#about"
+                    class="button primary">
+                    Explore Project
+                </a>
+
+                <a
+                    href="Smart_Medicine_Reminder.ino"
+                    class="button secondary">
+                    View Arduino Code
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+        <h2 class="title">
+            About the Project
+        </h2>
+
+        <p class="subtitle">
+
+            The Smart Medicine Reminder monitors the current time
+            from the DS3231 RTC module. When the programmed reminder
+            time is reached, the Arduino activates the buzzer to
+            provide an audible medicine reminder.
+
+        </p>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Problem
+                </h3>
+
+                <p>
+                    People may miss or delay scheduled medication
+                    timings without a timely reminder.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    💡
+                </div>
+
+                <h3>
+                    Solution
+                </h3>
+
+                <p>
+                    The Arduino continuously reads the RTC time and
+                    checks it against the programmed medicine reminder.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⏰
+                </div>
+
+                <h3>
+                    Time Tracking
+                </h3>
+
+                <p>
+                    The DS3231 RTC provides the current hour, minute
+                    and second used by the reminder logic.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🔊
+                </div>
+
+                <h3>
+                    Audible Alert
+                </h3>
+
+                <p>
+                    The buzzer is activated when the programmed
+                    reminder time is reached.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- COMPONENTS -->
+
+    <section id="components">
+
+        <h2 class="title">
+            Components Used
+        </h2>
+
+        <p class="subtitle">
+            Main hardware and software elements used in the project.
+        </p>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🔲
+                </div>
+
+                <h3>
+                    Arduino
+                </h3>
+
+                <p>
+                    The microcontroller responsible for executing
+                    the medicine reminder program.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🕒
+                </div>
+
+                <h3>
+                    DS3231 RTC
+                </h3>
+
+                <p>
+                    Provides the real-time hour, minute and second
+                    required for scheduled reminder detection.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🔊
+                </div>
+
+                <h3>
+                    Buzzer
+                </h3>
+
+                <p>
+                    Connected to Arduino digital pin 10 and used
+                    to produce the medicine reminder alert.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    💻
+                </div>
+
+                <h3>
+                    RTClib
+                </h3>
+
+                <p>
+                    Arduino library used to communicate with and
+                    obtain time information from the DS3231 RTC.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- WORKING -->
+
+    <section id="working">
+
+        <h2 class="title">
+            How It Works
+        </h2>
+
+        <p class="subtitle">
+            The program follows a simple scheduled reminder process.
+        </p>
+
+
+        <div class="flow">
+
+
+            <div class="flow-step">
+                🕒<br>
+                Read RTC Time
+            </div>
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+                ⏰<br>
+                Compare Time
+            </div>
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+                💊<br>
+                Trigger Reminder
+            </div>
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+                🔊<br>
+                Activate Buzzer
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- REMINDER TIME -->
+
+    <section>
+
+        <h2 class="title">
+            Programmed Reminder
+        </h2>
+
+        <p class="subtitle">
+
+            The reminder time configured in the supplied Arduino
+            program is:
+
+        </p>
+
+
+        <div class="reminder">
+
+            <div>
+                💊 Medicine Reminder
+            </div>
+
+            <div class="reminder-time">
+                13:43:00
+            </div>
+
+            <div class="reminder-label">
+                Programmed Reminder Time
+            </div>
+
+            <p style="margin-top: 20px; color: #aebaca;">
+
+                When the DS3231 time matches 13:43:00,
+                the reminder becomes active and the buzzer
+                begins its ON/OFF cycle.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- TECHNOLOGY -->
+
+    <section id="technology">
+
+        <h2 class="title">
+            Technologies Used
+        </h2>
+
+        <p class="subtitle">
+            Technologies and concepts used by the Arduino program.
+        </p>
+
+
+        <div class="technologies">
+
+            <div class="technology">
+                Arduino
+            </div>
+
+            <div class="technology">
+                Embedded C/C++
+            </div>
+
+            <div class="technology">
+                DS3231 RTC
+            </div>
+
+            <div class="technology">
+                I²C Communication
+            </div>
+
+            <div class="technology">
+                RTClib
+            </div>
+
+            <div class="technology">
+                Arduino IDE
+            </div>
+
+            <div class="technology">
+                Hardware Interfacing
+            </div>
+
+            <div class="technology">
+                Serial Monitor
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PROGRAM LOGIC -->
+
+    <section>
+
+        <h2 class="title">
+            Program Logic
+        </h2>
+
+        <p class="subtitle">
+            Important operations implemented in the supplied Arduino code.
+        </p>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🕐
+                </div>
+
+                <h3>
+                    RTC Reading
+                </h3>
+
+                <p>
+                    The program continuously obtains the current
+                    time using <b>rtc.now()</b>.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🌙
+                </div>
+
+                <h3>
+                    Midnight Reset
+                </h3>
+
+                <p>
+                    At 00:00:00, the program resets
+                    <b>reminderDone</b> so the reminder can
+                    occur again on the next day.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⏰
+                </div>
+
+                <h3>
+                    Time Matching
+                </h3>
+
+                <p>
+                    The program checks whether the current time
+                    matches 13:43:00.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🔊
+                </div>
+
+                <h3>
+                    Buzzer Control
+                </h3>
+
+                <p>
+                    Once active, the buzzer state changes every
+                    500 milliseconds using millis().
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CODE -->
+
+    <section id="code">
+
+        <h2 class="title">
+            Arduino Source Code
+        </h2>
+
+        <p class="subtitle">
+
+            The complete Arduino program is stored in the
+            GitHub repository as
+            <b>Smart_Medicine_Reminder.ino</b>.
+
+        </p>
+
+
+        <div class="code-container">
+
+<pre>
+#include &lt;Wire.h&gt;
+#include &lt;RTClib.h&gt;
+
+RTC_DS3231 rtc;
+
+const int buzzerPin = 10;
+
+// Set reminder time here..
+const int reminderHour = 13;
+const int reminderMinute = 43;
+const int reminderSecond = 0;
+
+bool reminderDone = false;
+bool reminderActive = false;
+
+unsigned long previousMillis = 0;
+bool buzzerState = false;
+
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(buzzerPin, OUTPUT);
+  digitalWrite(buzzerPin, LOW);
+
+  if (!rtc.begin())
+  {
+    Serial.println("RTC NOT FOUND");
+    while (1);
+  }
+
+  Serial.println("Medicine Reminder Started");
+}
+
+void loop()
+{
+  DateTime now = rtc.now();
+
+  Serial.print("Time : ");
+
+  if(now.hour() &lt; 10) Serial.print("0");
+  Serial.print(now.hour());
+
+  Serial.print(":");
+
+  if(now.minute() &lt; 10) Serial.print("0");
+  Serial.print(now.minute());
+
+  Serial.print(":");
+
+  if(now.second() &lt; 10) Serial.print("0");
+  Serial.println(now.second());
+
+  // Reset every midnight
+  if(now.hour()==0 &&
+     now.minute()==0 &&
+     now.second()==0)
+  {
+    reminderDone = false;
+  }
+
+  // Start reminder
+  if(now.hour()==reminderHour &&
+     now.minute()==reminderMinute &&
+     now.second()==reminderSecond &&
+     !reminderDone)
+  {
+    reminderActive = true;
+    reminderDone = true;
+
+    Serial.println("***** TAKE MEDICINE *****");
+  }
+
+  // Buzzer ON/OFF
+  if(reminderActive)
+  {
+    unsigned long currentMillis = millis();
+
+    if(currentMillis - previousMillis >= 500)
+    {
+      previousMillis = currentMillis;
+
+      buzzerState = !buzzerState;
+
+      digitalWrite(buzzerPin, buzzerState);
+    }
+  }
+
+  delay(500);
+}
+</pre>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <a
+                href="Smart_Medicine_Reminder.ino"
+                class="button primary">
+
+                Open Full Arduino Code
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PROJECT STATUS -->
+
+    <section>
+
+        <h2 class="title">
+            Project Information
+        </h2>
+
+        <p class="subtitle">
+
+            Arduino-based Embedded Systems project for scheduled
+            medicine reminders using a DS3231 RTC and buzzer.
+
+        </p>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🔧
+                </div>
+
+                <h3>
+                    Hardware
+                </h3>
+
+                <p>
+                    Arduino, DS3231 RTC module and buzzer.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    💻
+                </div>
+
+                <h3>
+                    Software
+                </h3>
+
+                <p>
+                    Arduino program using Wire and RTClib libraries.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⏰
+                </div>
+
+                <h3>
+                    Reminder
+                </h3>
+
+                <p>
+                    Programmed reminder time: 13:43:00.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            <strong>Smart Medicine Reminder</strong>
+        </p>
+
+        <p>
+            Arduino-Based Embedded Systems Project
+        </p>
+
+        <p style="margin-top: 8px;">
+            © 2026 Smart Medicine Reminder
+        </p>
+
+    </footer>
+
+
+</body>
+</html>
